@@ -1,0 +1,59 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  userid             String               @id
+  name               String
+  email              String               @unique
+  password           String
+  role               String               @default("USER")
+  TouristAttractions TouristAttractions[]
+  Culture            Culture[]
+
+  @@map("users")
+}
+
+model TouristAttractions {
+  taid        String @id
+  userid      String
+  name_place  String
+  image       String
+  description String
+  longtitude  String
+  latitude    String
+
+  // Ketika user di hapus maka data tourist_attractions yang userid nya sama maka akan terhapus
+  user Users @relation(fields: [userid], references: [userid], onDelete: Cascade)
+
+  @@map("tourist_attractions")
+}
+
+model Culture {
+  id         Int    @id @default(autoincrement())
+  taid       String
+  userid     String
+  name_image String
+  image      String
+
+  // Ketika user di hapus maka data culture yang userid nya sama maka akan terhapus
+  user Users @relation(fields: [userid], references: [userid], onDelete: Cascade)
+
+  @@map("culture")
+}
+
+model Comments {
+  id          Int    @id @default(autoincrement())
+  taid        String
+  userid      String
+  name        String
+  contact     String
+  description String
+
+  @@map("comments")
+}
