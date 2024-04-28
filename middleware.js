@@ -16,6 +16,12 @@ export default async function middleware(req) {
             return NextResponse.redirect(new URL('/dashboard', req.url))
         }
     }
+
+    if (url.startsWith('/dashboard/register') || url.startsWith('/dashboard/users')) {
+        if (session.role === "USER") {
+            return NextResponse.redirect(new URL('/dashboard', req.url))
+        }
+    }
 }
 
 export const config = {

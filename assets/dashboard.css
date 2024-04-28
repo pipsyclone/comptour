@@ -161,10 +161,6 @@ aside .nav-list {
     transition: .3s ease-in-out;
 }
 
-.container {
-    padding: 20px;
-}
-
 /* Topbar*/
 .topbar {
     background-color: #fff;
