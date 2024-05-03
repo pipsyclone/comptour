@@ -1,12 +1,12 @@
 -- CreateTable
 CREATE TABLE "users" (
-    "userid" TEXT NOT NULL,
+    "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "password" TEXT NOT NULL,
     "role" TEXT NOT NULL DEFAULT 'USER',
 
-    CONSTRAINT "users_pkey" PRIMARY KEY ("userid")
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -49,7 +49,7 @@ CREATE TABLE "comments" (
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- AddForeignKey
-ALTER TABLE "tourist_attractions" ADD CONSTRAINT "tourist_attractions_userid_fkey" FOREIGN KEY ("userid") REFERENCES "users"("userid") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "tourist_attractions" ADD CONSTRAINT "tourist_attractions_userid_fkey" FOREIGN KEY ("userid") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "culture" ADD CONSTRAINT "culture_userid_fkey" FOREIGN KEY ("userid") REFERENCES "users"("userid") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "culture" ADD CONSTRAINT "culture_userid_fkey" FOREIGN KEY ("userid") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

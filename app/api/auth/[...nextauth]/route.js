@@ -47,6 +47,14 @@ const handler = NextAuth({
         signOut: "/"
     },
     callbacks: {
+        async session({ session, token, user }) {
+            session.user.userid = token.sub
+            session.user.name = token.name
+            session.user.email = token.email
+            session.user.role = token.role
+
+            return session
+        },
         jwt(params) {
             // Update Token
             if (params.user?.role) {

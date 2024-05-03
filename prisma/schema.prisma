@@ -8,7 +8,7 @@ datasource db {
 }
 
 model Users {
-  userid             String               @id
+  id                 String               @id
   name               String
   email              String               @unique
   password           String
@@ -29,7 +29,7 @@ model TouristAttractions {
   latitude    String
 
   // Ketika user di hapus maka data tourist_attractions yang userid nya sama maka akan terhapus
-  user Users @relation(fields: [userid], references: [userid], onDelete: Cascade)
+  user Users @relation(fields: [userid], references: [id], onDelete: Cascade)
 
   @@map("tourist_attractions")
 }
@@ -42,7 +42,7 @@ model Culture {
   image      String
 
   // Ketika user di hapus maka data culture yang userid nya sama maka akan terhapus
-  user Users @relation(fields: [userid], references: [userid], onDelete: Cascade)
+  user Users @relation(fields: [userid], references: [id], onDelete: Cascade)
 
   @@map("culture")
 }

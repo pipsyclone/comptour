@@ -16,7 +16,7 @@ export async function POST(request) {
         } else {
             await prisma.users.create({
                 data: {
-                    userid: md5(name + email + password + role),
+                    id: md5(name + email + password + role),
                     name: name,
                     email: email,
                     password: md5(password),
