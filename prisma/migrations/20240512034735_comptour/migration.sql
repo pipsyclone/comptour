@@ -10,27 +10,27 @@ CREATE TABLE "users" (
 );
 
 -- CreateTable
-CREATE TABLE "tourist_attractions" (
+CREATE TABLE "touristattractions" (
     "taid" TEXT NOT NULL,
     "userid" TEXT NOT NULL,
     "name_place" TEXT NOT NULL,
     "image" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "longtitude" TEXT NOT NULL,
-    "latitude" TEXT NOT NULL,
+    "longtitude" DOUBLE PRECISION NOT NULL DEFAULT 0.00,
+    "latitude" DOUBLE PRECISION NOT NULL DEFAULT 0.00,
 
-    CONSTRAINT "tourist_attractions_pkey" PRIMARY KEY ("taid")
+    CONSTRAINT "touristattractions_pkey" PRIMARY KEY ("taid")
 );
 
 -- CreateTable
-CREATE TABLE "culture" (
+CREATE TABLE "cultures" (
     "id" SERIAL NOT NULL,
     "taid" TEXT NOT NULL,
     "userid" TEXT NOT NULL,
     "name_image" TEXT NOT NULL,
     "image" TEXT NOT NULL,
 
-    CONSTRAINT "culture_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "cultures_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -49,7 +49,7 @@ CREATE TABLE "comments" (
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- AddForeignKey
-ALTER TABLE "tourist_attractions" ADD CONSTRAINT "tourist_attractions_userid_fkey" FOREIGN KEY ("userid") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "touristattractions" ADD CONSTRAINT "touristattractions_userid_fkey" FOREIGN KEY ("userid") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "culture" ADD CONSTRAINT "culture_userid_fkey" FOREIGN KEY ("userid") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "cultures" ADD CONSTRAINT "cultures_userid_fkey" FOREIGN KEY ("userid") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;

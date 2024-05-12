@@ -1,10 +1,49 @@
 'use client'
+import { useState, useEffect } from 'react';
+import 'leaflet/dist/leaflet.css'
+import 'leaflet'
+import L from 'leaflet';
 import CardStatistic from "@/components/CardStatistic";
-import DataTables from "@/components/DataTables";
-import Script from "@/assets/script";
+import { MapContainer, Marker, Popup, TileLayer, Tooltip, useMapEvents } from 'react-leaflet';
+import TouristAttractionsControllers from '@/controllers/TouristAttractionsControllers';
 
 export default function HomeComponent() {
-    const { handleAlert } = Script()
+    const {
+        data,
+        TAGetAll
+    } = TouristAttractionsControllers()
+
+    const homeMarker = new L.Icon({
+        iconUrl: '/images/home-marker.png',
+        iconSize: [32, 32],
+        iconAnchor: [16, 32],
+    });
+
+    const wisataMarker = new L.Icon({
+        iconUrl: '/images/wisata-marker.png', // Path ke gambar marker custom
+        iconSize: [32, 32], // Ukuran marker custom
+        iconAnchor: [32 / 2, 32], // Anchor dari marker custom
+    });
+
+    const [myLocation, setMyLocation] = useState(null);
+    useEffect(() => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
+                    setMyLocation([latitude, longitude]);
+                },
+                (error) => {
+                    console.error('Error getting user location:', error);
+                }
+            );
+        } else {
+            console.error('Geolocation is not supported by this browser.');
+        }
+
+        TAGetAll()
+    }, []);
+
     return (
         <>
             <div className="bg-hero"></div>
@@ -21,8 +60,33 @@ export default function HomeComponent() {
 
             <div className="container row-column gap-3">
                 <div className="card">
-                    <h2>Komentar Hari Ini</h2>
-                    <DataTables />
+                    {
+                        myLocation && <MapContainer center={myLocation} zoom={5} scrollWheelZoom={true} style={{ width: '100%', height: '500px' }}>
+                            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+                            {
+                                data.length < 1 ?
+                                    ''
+                                    :
+                                    data.map((data, key) => {
+                                        return (
+                                            <Marker position={[data?.longtitude, data?.latitude]} icon={wisataMarker}>
+                                                <Popup>
+                                                    <h3>{data.name_place}</h3>
+                                                    {data.description}
+                                                </Popup>
+                                                <Tooltip>{data.name_place}</Tooltip>
+                                            </Marker>
+                                        )
+                                    })
+                            }
+                            {
+                                myLocation &&
+                                <Marker position={myLocation} icon={homeMarker}>
+                                    <Tooltip>Kamu disini</Tooltip>
+                                </Marker>
+                            }
+                        </MapContainer>
+                    }
                 </div>
             </div>
         </>

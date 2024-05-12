@@ -7,6 +7,7 @@ import { useSession } from "next-auth/react";
 
 const TopBar = (props) => {
     const { data: session } = useSession()
+    console.log(session)
     return (
         <nav className="topbar">
             <button type="button" className="btn-sidebar-toggle cursor-pointer" onClick={props.onClickSidebarShow}>

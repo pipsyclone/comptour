@@ -2,7 +2,6 @@ import { useSession } from "next-auth/react";
 
 const Sidebar = (props) => {
     const { data: session } = useSession()
-    console.log(session)
     return (
         <>
             {
@@ -23,7 +22,7 @@ const Sidebar = (props) => {
                     </li>
                     <p className="nav-subtitle">Wisata</p>
                     <li className="nav-item">
-                        <a href="#" className="nav-link">
+                        <a href="/dashboard/tourist-attractions" className="nav-link">
                             <i className="fa-solid fa-map-location-dot"></i>
                             Tempat Wisata
                         </a>

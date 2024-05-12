@@ -22,6 +22,10 @@
     transition: .3s ease-in-out;
 }
 
+.btn-sm {
+    font-size: 9pt;
+}
+
 .btn-md {
     font-size: 12pt;
 }

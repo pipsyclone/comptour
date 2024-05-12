@@ -14,7 +14,7 @@ model Users {
   password           String
   role               String               @default("USER")
   TouristAttractions TouristAttractions[]
-  Culture            Culture[]
+  Culture            Cultures[]
 
   @@map("users")
 }
@@ -25,16 +25,16 @@ model TouristAttractions {
   name_place  String
   image       String
   description String
-  longtitude  String
-  latitude    String
+  longtitude  Float  @default(0.00)
+  latitude    Float  @default(0.00)
 
   // Ketika user di hapus maka data tourist_attractions yang userid nya sama maka akan terhapus
   user Users @relation(fields: [userid], references: [id], onDelete: Cascade)
 
-  @@map("tourist_attractions")
+  @@map("touristattractions")
 }
 
-model Culture {
+model Cultures {
   id         Int    @id @default(autoincrement())
   taid       String
   userid     String
@@ -44,7 +44,7 @@ model Culture {
   // Ketika user di hapus maka data culture yang userid nya sama maka akan terhapus
   user Users @relation(fields: [userid], references: [id], onDelete: Cascade)
 
-  @@map("culture")
+  @@map("cultures")
 }
 
 model Comments {
