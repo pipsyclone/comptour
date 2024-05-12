@@ -55,7 +55,7 @@ const TouristAttractionsControllers = () => {
 
     // Get All Tourist Attractions
     const TAGetAll = async () => {
-        await axios.get('/api/tourist-attractions/get-all', { withCredentials: true })
+        await axios.get('/api/tourist-attractions/get-all')
             .then(res => {
                 setData(res.data.data)
                 console.log(res)
@@ -68,7 +68,7 @@ const TouristAttractionsControllers = () => {
     // Delete Tourist Attractions By ID
     const TADelete = async (taid) => {
         setIsLoading(true)
-        await axios.delete('/api/tourist-attractions/delete?taid=' + taid, { withCredentials: true })
+        await axios.delete('/api/tourist-attractions/delete?taid=' + taid)
             .then(res => {
                 handleAlert('success', 'Proses Berhasil!', res.data.message)
                 TAGetAll()
