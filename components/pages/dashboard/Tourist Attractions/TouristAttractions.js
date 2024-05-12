@@ -54,7 +54,7 @@ export default function TouristAttractionsComponent() {
 
     const conditionalData = [
         {
-            when: row => row.userid !== session.user.userid,
+            when: row => row.userid !== session?.user?.userid,
             style: { display: "none" }
         }
     ]
