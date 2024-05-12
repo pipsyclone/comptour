@@ -31,7 +31,7 @@ const TouristAttractionsControllers = () => {
                 longtitude: parseFloat(longtitude),
                 latitude: parseFloat(latitude),
                 desc: desc
-            })
+            }, { withCredentials: true })
                 .then(res => {
                     if (res.data.status === 200) {
                         handleAlert('success', 'Proses Berhasil!', res.data.message)
@@ -55,7 +55,7 @@ const TouristAttractionsControllers = () => {
 
     // Get All Tourist Attractions
     const TAGetAll = async () => {
-        await axios.get('/api/tourist-attractions/get-all')
+        await axios.get('/api/tourist-attractions/get-all', { withCredentials: true })
             .then(res => {
                 setData(res.data.data)
             })
@@ -67,7 +67,7 @@ const TouristAttractionsControllers = () => {
     // Delete Tourist Attractions By ID
     const TADelete = async (taid) => {
         setIsLoading(true)
-        await axios.delete('/api/tourist-attractions/delete?taid=' + taid)
+        await axios.delete('/api/tourist-attractions/delete?taid=' + taid, { withCredentials: true })
             .then(res => {
                 handleAlert('success', 'Proses Berhasil!', res.data.message)
                 TAGetAll()
