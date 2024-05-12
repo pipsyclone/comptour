@@ -43,7 +43,7 @@ export default function HomeComponent() {
         TAGetAll()
     }, [])
 
-    console.log(data.length)
+    console.log(data)
 
     return (
         <>
