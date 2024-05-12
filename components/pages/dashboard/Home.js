@@ -66,7 +66,7 @@ export default function HomeComponent() {
                         &&
                         <MapContainer center={myLocation} zoom={5} scrollWheelZoom={true} style={{ width: '100%', height: '500px' }}>
                             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                            {
+                            {/* {
                                 data.length < 1 ?
                                     ''
                                     :
@@ -81,7 +81,7 @@ export default function HomeComponent() {
                                             </Marker>
                                         )
                                     })
-                            }
+                            } */}
                             {
                                 myLocation
                                 &&
