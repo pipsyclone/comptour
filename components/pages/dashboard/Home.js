@@ -63,17 +63,20 @@ export default function HomeComponent() {
                         myLocation && <MapContainer center={myLocation} zoom={5} scrollWheelZoom={true} style={{ width: '100%', height: '500px' }}>
                             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                             {
-                                data.map((data, key) => {
-                                    return (
-                                        <Marker position={[data?.longtitude, data?.latitude]} icon={wisataMarker}>
-                                            <Popup>
-                                                <h3>{data.name_place}</h3>
-                                                {data.description}
-                                            </Popup>
-                                            <Tooltip>{data.name_place}</Tooltip>
-                                        </Marker>
-                                    )
-                                })
+                                data.length < 1 ?
+                                    ''
+                                    :
+                                    data.map((data, key) => {
+                                        return (
+                                            <Marker position={[data?.longtitude, data?.latitude]} icon={wisataMarker}>
+                                                <Popup>
+                                                    <h3>{data.name_place}</h3>
+                                                    {data.description}
+                                                </Popup>
+                                                <Tooltip>{data.name_place}</Tooltip>
+                                            </Marker>
+                                        )
+                                    })
                             }
                             {
                                 myLocation &&
