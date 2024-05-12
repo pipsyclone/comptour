@@ -31,6 +31,7 @@ export default function HomeComponent() {
                 (position) => {
                     const { latitude, longitude } = position.coords;
                     setMyLocation([latitude, longitude]);
+                    TAGetAll()
                 },
                 (error) => {
                     console.error('Error getting user location:', error);
@@ -39,8 +40,6 @@ export default function HomeComponent() {
         } else {
             console.error('Geolocation is not supported by this browser.');
         }
-
-        TAGetAll()
     }, [])
 
     console.log(data)
