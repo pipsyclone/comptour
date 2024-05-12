@@ -1,10 +1,9 @@
 'use client'
 import { useState, useEffect } from 'react';
 import 'leaflet/dist/leaflet.css'
-import 'leaflet'
-import L from 'leaflet';
+import L from 'leaflet'
 import CardStatistic from "@/components/CardStatistic";
-import { MapContainer, Marker, Popup, TileLayer, Tooltip, useMapEvents } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer, Tooltip } from 'react-leaflet';
 import TouristAttractionsControllers from '@/controllers/TouristAttractionsControllers';
 
 export default function HomeComponent() {
@@ -64,20 +63,17 @@ export default function HomeComponent() {
                         myLocation && <MapContainer center={myLocation} zoom={5} scrollWheelZoom={true} style={{ width: '100%', height: '500px' }}>
                             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                             {
-                                data.length < 1 ?
-                                    ''
-                                    :
-                                    data.map((data, key) => {
-                                        return (
-                                            <Marker position={[data?.longtitude, data?.latitude]} icon={wisataMarker}>
-                                                <Popup>
-                                                    <h3>{data.name_place}</h3>
-                                                    {data.description}
-                                                </Popup>
-                                                <Tooltip>{data.name_place}</Tooltip>
-                                            </Marker>
-                                        )
-                                    })
+                                data.map((data, key) => {
+                                    return (
+                                        <Marker position={[data?.longtitude, data?.latitude]} icon={wisataMarker}>
+                                            <Popup>
+                                                <h3>{data.name_place}</h3>
+                                                {data.description}
+                                            </Popup>
+                                            <Tooltip>{data.name_place}</Tooltip>
+                                        </Marker>
+                                    )
+                                })
                             }
                             {
                                 myLocation &&
