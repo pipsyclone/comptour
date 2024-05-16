@@ -5,8 +5,10 @@ import L from 'leaflet'
 import CardStatistic from "@/components/CardStatistic";
 import { MapContainer, Marker, Popup, TileLayer, Tooltip } from 'react-leaflet';
 import TouristAttractionsControllers from '@/controllers/TouristAttractionsControllers';
+import { useSession } from 'next-auth/react';
 
 export default function HomeComponent() {
+    const {data: session} = useSession()
     const {
         data,
         TAGetAll
@@ -46,10 +48,12 @@ export default function HomeComponent() {
         <>
             <div className="bg-hero"></div>
             <div className="container row-column gap-3 card-statistic-wrapper">
-                <CardStatistic statisticName="Products" solidIcon="fa-boxes" data={233} dataFooter={5 + " Product Out of Stock"} />
-                <CardStatistic statisticName="Income this Month" solidIcon="fa-coins" data={"Rp. 250.000"} dataFooter={"Estimate Rp. 1M Per Years"} />
-                <CardStatistic statisticName="Deliver" solidIcon="fa-truck-ramp-box" data={29} dataFooter={11 + " Need Confirmation"} />
-                <CardStatistic statisticName="Users" solidIcon="fa-users" data={11} dataFooter={7 + " Users Not Verified"} />
+                <CardStatistic statisticName="Tempat Wisata" solidIcon="fa-mountain-sun" data={233} dataFooter={"Jumlah lokasi tempat wisata yang anda unggah"} />
+                <CardStatistic statisticName="Komentar" solidIcon="fa-comments" data={"Rp. 250.000"} dataFooter={"Jumlah komentar di beberapa tempat"} />
+                <CardStatistic statisticName="Blog" solidIcon="fa-blog" data={29} dataFooter={"Blog yang anda unggah"} />
+                {
+                    session?.user?.role === "ADMIN" ? <CardStatistic statisticName="Pengguna" solidIcon="fa-users" data={11} dataFooter={"Pengguna yang terdaftar"} /> : <div className='d-none'></div>
+                }
             </div>
 
             <div className="paths-wrapper">

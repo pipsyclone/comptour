@@ -77,9 +77,9 @@ export default function TouristAttractionsComponent() {
         return (
             <div className="row gap">
                 <input type="text" className="form-ctrl" placeholder="Cari Disini..." value={filterText} onChange={e => setFilterText(e.target.value)} />
-                <button type="text" className="btn btn-primary" onClick={handleClear}>
+                {/* <button type="text" className="btn btn-primary" onClick={handleClear}>
                     Reset
-                </button>
+                </button> */}
             </div>
         )
     }, [filterText, resetPaginationToggle])

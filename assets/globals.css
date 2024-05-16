@@ -31,6 +31,10 @@ a {
     text-decoration: none;
 }
 
+.d-none {
+    display: none;
+}
+
 .container {
     padding: 20px;
 }
