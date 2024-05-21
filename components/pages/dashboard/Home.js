@@ -23,7 +23,7 @@ export default function HomeComponent() {
     const homeMarker = new L.Icon({
         iconUrl: '/images/home-marker.png',
         iconSize: [32, 32],
-        iconAnchor: [16, 32],
+        iconAnchor: [32 / 2, 32],
     });
 
     const wisataMarker = new L.Icon({
@@ -34,6 +34,10 @@ export default function HomeComponent() {
 
     const [myLocation, setMyLocation] = useState(null);
     useEffect(() => {
+        USRGetAll()
+        getAllBlog()
+        getAllComment()
+
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(
                 (position) => {
@@ -48,10 +52,6 @@ export default function HomeComponent() {
         } else {
             console.error('Geolocation is not supported by this browser.');
         }
-
-        USRGetAll()
-        getAllBlog()
-        getAllComment()
     }, [])
 
     return (
@@ -83,15 +83,17 @@ export default function HomeComponent() {
                             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                             {
                                 data.map((data, key) => {
-                                    return (
-                                        <Marker position={[data?.longtitude, data?.latitude]} icon={wisataMarker} key={key}>
-                                            <Popup>
-                                                <h3>{data.name_place}</h3>
-                                                {data.description}
-                                            </Popup>
-                                            <Tooltip>{data.name_place}</Tooltip>
-                                        </Marker>
-                                    )
+                                    if (session.user.userid === data.userid) {
+                                        return (
+                                            <Marker position={[data?.longtitude, data?.latitude]} icon={wisataMarker} key={key}>
+                                                <Popup>
+                                                    <h3>{data.name_place}</h3>
+                                                    {data.description}
+                                                </Popup>
+                                                <Tooltip>{data.name_place}</Tooltip>
+                                            </Marker>
+                                        )
+                                    }
                                 })
                             }
                             {
