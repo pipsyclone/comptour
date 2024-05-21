@@ -10,6 +10,7 @@ const TouristAttractionsControllers = () => {
     const { handleAlert } = Script()
 
     const [data, setData] = useState([])
+    const [taid, setTaid] = useState("")
     const [nameplace, setNamePlace] = useState("")
     const [image, setImage] = useState("")
     const [longtitude, setLongtitude] = useState("")
@@ -53,6 +54,45 @@ const TouristAttractionsControllers = () => {
         }
     }
 
+    // Update Tourist Attractions
+    const TAUpdateGetById = async (taid) => {
+        await axios.get('/api/tourist-attractions/get-by-id?taid=' + taid)
+            .then(res => {
+                setTaid(res.data.data.taid)
+                setNamePlace(res.data.data.name_place)
+                setImage(res.data.data.image)
+                setDesc(res.data.data.description)
+                setLongtitude(res.data.data.longtitude)
+                setLatitude(res.data.data.latitude)
+            })
+            .catch(err => {
+                handleAlert('error', 'Proses Gagal!', 'Server gagal memproses!')
+            })
+    }
+
+    const TAUpdate = async (e) => {
+        e.preventDefault()
+
+        await axios.put('/api/tourist-attractions/update', {
+            taid: taid,
+            nameplace: nameplace,
+            image: image,
+            desc: desc,
+            longtitude: longtitude,
+            latitude: latitude
+        })
+            .then(res => {
+                if (res.data.status === 400 || res.data.status === 500) {
+                    handleAlert('error', 'Proses Gagal!', res.data.message)
+                } else {
+                    handleAlert('success', 'Proses Gagal!', res.data.message)
+                }
+            })
+            .catch(err => {
+                handleAlert('error', 'Proses Gagal!', 'Server gagal memproses!')
+            })
+    }
+
     // Get All Tourist Attractions
     const TAGetAll = async () => {
         await axios.get('/api/tourist-attractions/get-all')
@@ -81,9 +121,10 @@ const TouristAttractionsControllers = () => {
 
     return {
         isLoading,
-        data, setData, nameplace, setNamePlace, image, setImage, longtitude, setLongtitude, latitude, setLatitude, desc, setDesc,
+        data, setData, taid, setTaid, nameplace, setNamePlace, image, setImage, longtitude, setLongtitude, latitude, setLatitude, desc, setDesc,
         TAonSubmit,
         TAGetAll,
+        TAUpdateGetById, TAUpdate,
         TADelete
     }
 }

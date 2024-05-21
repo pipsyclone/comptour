@@ -1,13 +1,14 @@
 const { PrismaClient } = require('@prisma/client')
-const md5 = require('md5')
 const prisma = new PrismaClient()
+const md5 = require('md5')
+const randomstring = require('randomstring')
 
 async function main() {
     const user = await prisma.users.upsert({
         where: { email: 'user@mail.com' },
         update: {},
         create: {
-            id: md5('User' + 'user@mail.com' + 'user123'),
+            id: 'USR' + randomstring.generate({ length: 12, charset: 'numeric' }),
             name: 'User',
             email: 'user@mail.com',
             password: md5('user123'),
@@ -18,7 +19,7 @@ async function main() {
         where: { email: 'user2@mail.com' },
         update: {},
         create: {
-            id: md5('User2' + 'user2@mail.com' + 'user123'),
+            id: 'USR' + randomstring.generate({ length: 12, charset: 'numeric' }),
             name: 'User2',
             email: 'user2@mail.com',
             password: md5('user123'),
@@ -29,7 +30,7 @@ async function main() {
         where: { email: 'admin@mail.com' },
         update: {},
         create: {
-            id: md5('Admin' + 'admin@mail.com' + 'admin123'),
+            id: 'USR' + randomstring.generate({ length: 12, charset: 'numeric' }),
             name: 'Admin',
             email: 'admin@mail.com',
             password: md5('admin123'),

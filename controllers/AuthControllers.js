@@ -8,11 +8,22 @@ const AuthControllers = () => {
     const { handleAlert } = Script()
     const [isLoading, setIsLoading] = useState(false)
 
+    const [userData, setUserData] = useState([])
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
     const [role, setRole] = useState("")
+
+    const USRGetAll = async () => {
+        await axios.get('/api/users/get-all')
+            .then(res => {
+                setUserData(res.data.data)
+            })
+            .catch(err => {
+                console.log(err.message)
+            })
+    }
 
     const HandleSignIn = (e) => {
         e.preventDefault()
@@ -60,7 +71,7 @@ const AuthControllers = () => {
                     } else {
                         handleAlert('error', 'Proses Gagal!', res.data.message)
                     }
-                    console.log(res.data.message)
+
                     setIsLoading(false)
                 })
                 .catch((err) => {
@@ -72,7 +83,8 @@ const AuthControllers = () => {
 
     return {
         isLoading,
-        name, setName, email, setEmail, password, setPassword, confirmPassword, setConfirmPassword, role, setRole,
+        userData, setUserData, name, setName, email, setEmail, password, setPassword, confirmPassword, setConfirmPassword, role, setRole,
+        USRGetAll,
         HandleSignIn,
         HandleSignUp
     }

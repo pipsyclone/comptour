@@ -1,4 +1,6 @@
 import { useSession } from "next-auth/react";
+import Image from "next/image";
+import Logo from "@/assets/image/logo-full.png"
 
 const Sidebar = (props) => {
     const { data: session } = useSession()
@@ -12,7 +14,8 @@ const Sidebar = (props) => {
             }
 
             <aside className={props.sidebarShow ? 'sidebar-desktop' : 'sidebar-responsive'}>
-                <h3 className="nav-title">CompTour</h3>
+                {/* <h3 className="nav-title">CompTour</h3> */}
+                <Image src={Logo} className='nav-title' width={150} height={0} />
                 <ul className="nav-list">
                     <li className="nav-item">
                         <a href="/" className="nav-link">
@@ -34,7 +37,7 @@ const Sidebar = (props) => {
                         </a>
                     </li>
                     <li className="nav-item">
-                        <a href="#" className="nav-link">
+                        <a href="/dashboard/blog" className="nav-link">
                             <i className="fa-solid fa-newspaper"></i>
                             Blog
                         </a>

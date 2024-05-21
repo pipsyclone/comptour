@@ -1,70 +1,57 @@
 'use client'
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo } from "react";
 import DataTables from "@/components/DataTables";
-import TouristAttractionsControllers from "@/controllers/TouristAttractionsControllers";
+import BlogsControllers from "@/controllers/BlogsControllers";
 import { useSession } from "next-auth/react";
 
-export default function TouristAttractionsComponent() {
+export default function BlogComponent() {
     const { data: session } = useSession()
     const {
         isLoading,
-        data,
-        TAGetAll,
-        TADelete
-    } = TouristAttractionsControllers()
+        blogData,
+        getAllBlog,
+        deleteBlog
+    } = BlogsControllers()
 
-    useEffect(() => {
-        TAGetAll()
+    useState(() => {
+        getAllBlog()
     }, [])
 
+    // Columns
     const columns = [
         {
-            name: "ID",
-            selector: row => row.taid,
-            // sortable: true
+            name: 'Blog ID',
+            selector: row => row.blogid
         },
         {
-            name: "Gambar",
+            name: 'Gambar',
             selector: row => row.image
         },
         {
-            name: "Nama Tempat Wisata",
-            selector: row => row.name_place
+            name: 'Judul',
+            selector: row => row.title
         },
         {
-            name: "Longititude",
-            selector: row => row.longtitude
-        },
-        {
-            name: "Latitude",
-            selector: row => row.latitude
-        },
-        {
-            name: "Aksi",
+            name: 'Aksi',
             selector: row => (
                 <div className="row gap">
-                    <button type="button" className="btn btn-sm btn-primary" onClick={() => window.location.href = '/dashboard/tourist-attractions/update/' + row.taid}>Edit</button>
-                    <button type="button" className={isLoading ? "btn btn-sm btn-danger disabled" : "btn btn-sm btn-danger"} onClick={() => TADelete(row.taid)}>
+                    <a href={"/dashboard/blog/update/" + row.blogid} className="btn btn-sm btn-primary">Edit</a>
+                    <button type="button" className={isLoading ? "btn btn-sm btn-danger disabled" : "btn btn-sm btn-danger"} onClick={() => deleteBlog(row.blogid)}>
                         {isLoading ? <div className="loader"></div> : 'Hapus'}
                     </button>
                 </div>
             ),
             style: { padding: '5px' }
-        }
-    ]
-
-    const conditionalData = [
-        {
-            when: row => row.userid !== session?.user?.userid && session?.user?.role === 'USER',
-            style: { display: "none" }
-        }
+        },
     ]
 
     const [filterText, setFilterText] = useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-    const filteredData = data.filter(
+    const filteredData = blogData.filter(
         item =>
-            item.name_place && item.name_place.toLowerCase().includes(filterText.toLowerCase())
+            item.title && item.title.toLowerCase().includes(filterText.toLowerCase())
+            ||
+            item.description && item.description.toLowerCase().includes(filterText.toLowerCase())
     )
 
     const subHeaderComponentMemo = useMemo(() => {
@@ -85,20 +72,27 @@ export default function TouristAttractionsComponent() {
         )
     }, [filterText, resetPaginationToggle])
 
+    const conditionalData = [
+        {
+            when: row => row.userid === session?.user?.userid && session?.user?.role === 'USER',
+            style: { display: 'none' }
+        }
+    ]
+
     return (
         <>
             <div className="paths-wrapper">
                 <span>Dashboard</span>
                 /
-                <span>Tempat Wisata</span>
+                <span>Blog</span>
             </div>
 
             <div className="container">
                 <div className="card">
                     <div className="row space-between mb-3">
-                        <a href="/dashboard/tourist-attractions/store" className="btn btn-primary">Tambah Tempat Wisata</a>
+                        <a href="/dashboard/blog/store" className="btn btn-primary">Tambah Blog</a>
                     </div>
-                    <hr />
+
                     {
                         <DataTables
                             columns={columns}

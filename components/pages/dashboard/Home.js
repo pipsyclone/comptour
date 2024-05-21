@@ -6,9 +6,13 @@ import CardStatistic from "@/components/CardStatistic";
 import { MapContainer, Marker, Popup, TileLayer, Tooltip } from 'react-leaflet';
 import TouristAttractionsControllers from '@/controllers/TouristAttractionsControllers';
 import { useSession } from 'next-auth/react';
+import AuthControllers from '@/controllers/AuthControllers';
+import BlogsControllers from '@/controllers/BlogsControllers';
 
 export default function HomeComponent() {
-    const {data: session} = useSession()
+    const { data: session } = useSession()
+    const { blogData, getAllBlog } = BlogsControllers()
+    const { userData, USRGetAll } = AuthControllers()
     const {
         data,
         TAGetAll
@@ -42,19 +46,26 @@ export default function HomeComponent() {
         } else {
             console.error('Geolocation is not supported by this browser.');
         }
+
+        USRGetAll()
+        getAllBlog()
     }, [])
 
     return (
         <>
-            <div className="bg-hero"></div>
-            <div className="container row-column gap-3 card-statistic-wrapper">
-                <CardStatistic statisticName="Tempat Wisata" solidIcon="fa-mountain-sun" data={233} dataFooter={"Jumlah lokasi tempat wisata yang anda unggah"} />
-                <CardStatistic statisticName="Komentar" solidIcon="fa-comments" data={"Rp. 250.000"} dataFooter={"Jumlah komentar di beberapa tempat"} />
-                <CardStatistic statisticName="Blog" solidIcon="fa-blog" data={29} dataFooter={"Blog yang anda unggah"} />
-                {
-                    session?.user?.role === "ADMIN" ? <CardStatistic statisticName="Pengguna" solidIcon="fa-users" data={11} dataFooter={"Pengguna yang terdaftar"} /> : <div className='d-none'></div>
-                }
-            </div>
+            {
+                session?.user?.role === "ADMIN" ?
+                    <>
+                        <div className="bg-hero"></div>
+                        <div className="container row-column gap-3 card-statistic-wrapper">
+                            <CardStatistic statisticName="Tempat Wisata" solidIcon="fa-mountain-sun" data={data.length} dataFooter={"Jumlah lokasi tempat wisata yang anda unggah"} />
+                            <CardStatistic statisticName="Komentar" solidIcon="fa-comments" data={userData.length} dataFooter={"Jumlah komentar di beberapa tempat"} />
+                            <CardStatistic statisticName="Blog" solidIcon="fa-blog" data={blogData.length} dataFooter={"Blog yang anda unggah"} />
+                            <CardStatistic statisticName="Pengguna" solidIcon="fa-users" data={userData.length} dataFooter={"Pengguna yang terdaftar"} />
+                        </div>
+                    </>
+                    : <div className='d-none'></div>
+            }
 
             <div className="paths-wrapper">
                 <span>Dashboard</span>

@@ -23,7 +23,7 @@ const DataTables = (props) => {
     }
 
     const paginationComponentOptions = {
-        rowsPerPageText: 'Per page',
+        rowsPerPageText: 'Data per page',
         rangeSeparatorText: "Dari",
         selectAllRowsItem: true,
         selectAllRowsItemText: 'Semua',
@@ -34,8 +34,8 @@ const DataTables = (props) => {
             columns={props.columns}
             data={props.dataArray}
             conditionalRowStyles={props.conditionalData}
-            pagination
-            paginationComponentOptions={paginationComponentOptions}
+            // pagination
+            // paginationComponentOptions={paginationComponentOptions}
             customStyles={customStyles}
             dense
             subHeader

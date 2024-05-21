@@ -45,6 +45,17 @@ CREATE TABLE "comments" (
     CONSTRAINT "comments_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "blogs" (
+    "blogid" SERIAL NOT NULL,
+    "userid" TEXT NOT NULL,
+    "image" TEXT NOT NULL,
+    "title" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+
+    CONSTRAINT "blogs_pkey" PRIMARY KEY ("blogid")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
@@ -53,3 +64,9 @@ ALTER TABLE "touristattractions" ADD CONSTRAINT "touristattractions_userid_fkey"
 
 -- AddForeignKey
 ALTER TABLE "cultures" ADD CONSTRAINT "cultures_userid_fkey" FOREIGN KEY ("userid") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "comments" ADD CONSTRAINT "comments_taid_fkey" FOREIGN KEY ("taid") REFERENCES "touristattractions"("taid") ON DELETE CASCADE ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "blogs" ADD CONSTRAINT "blogs_userid_fkey" FOREIGN KEY ("userid") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
