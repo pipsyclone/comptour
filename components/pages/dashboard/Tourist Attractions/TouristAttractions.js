@@ -96,7 +96,10 @@ export default function TouristAttractionsComponent() {
             <div className="container">
                 <div className="card">
                     <div className="row space-between mb-3">
-                        <a href="/dashboard/tourist-attractions/store" className="btn btn-primary">Tambah Tempat Wisata</a>
+                        <div className="row gap">
+                            <a href="/dashboard/tourist-attractions/store" className="btn btn-primary">Tambah Tempat Wisata</a>
+                            <a href="/dashboard/tourist-attractions/store/culture" className="btn btn-primary">Tambah Gambar Budaya</a>
+                        </div>
                     </div>
                     <hr />
                     {

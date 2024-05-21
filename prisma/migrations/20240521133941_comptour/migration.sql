@@ -26,7 +26,6 @@ CREATE TABLE "touristattractions" (
 CREATE TABLE "cultures" (
     "id" SERIAL NOT NULL,
     "taid" TEXT NOT NULL,
-    "userid" TEXT NOT NULL,
     "name_image" TEXT NOT NULL,
     "image" TEXT NOT NULL,
 
@@ -37,10 +36,10 @@ CREATE TABLE "cultures" (
 CREATE TABLE "comments" (
     "id" SERIAL NOT NULL,
     "taid" TEXT NOT NULL,
-    "userid" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "contact" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
 
     CONSTRAINT "comments_pkey" PRIMARY KEY ("id")
 );
@@ -63,7 +62,7 @@ CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 ALTER TABLE "touristattractions" ADD CONSTRAINT "touristattractions_userid_fkey" FOREIGN KEY ("userid") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "cultures" ADD CONSTRAINT "cultures_userid_fkey" FOREIGN KEY ("userid") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "cultures" ADD CONSTRAINT "cultures_taid_fkey" FOREIGN KEY ("taid") REFERENCES "touristattractions"("taid") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "comments" ADD CONSTRAINT "comments_taid_fkey" FOREIGN KEY ("taid") REFERENCES "touristattractions"("taid") ON DELETE CASCADE ON UPDATE CASCADE;

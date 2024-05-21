@@ -30,12 +30,16 @@ const Sidebar = (props) => {
                             Tempat Wisata
                         </a>
                     </li>
-                    <li className="nav-item">
-                        <a href="#" className="nav-link">
-                            <i className="fa-solid fa-comments"></i>
-                            Komentar
-                        </a>
-                    </li>
+                    {
+                        session && session.user.role === "ADMIN" && (
+                            <li className="nav-item">
+                                <a href="/dashboard/comments" className="nav-link">
+                                    <i className="fa-solid fa-comments"></i>
+                                    Komentar
+                                </a>
+                            </li>
+                        )
+                    }
                     <li className="nav-item">
                         <a href="/dashboard/blog" className="nav-link">
                             <i className="fa-solid fa-newspaper"></i>

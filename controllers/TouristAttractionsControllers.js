@@ -2,12 +2,14 @@ import axios from "axios";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
 import Script from "@/assets/script";
+import { useRouter } from "next/navigation";
 
 const TouristAttractionsControllers = () => {
 
     const [isLoading, setIsLoading] = useState(false)
     const { data: session } = useSession()
     const { handleAlert } = Script()
+    const router = useRouter()
 
     const [data, setData] = useState([])
     const [taid, setTaid] = useState("")
@@ -34,21 +36,22 @@ const TouristAttractionsControllers = () => {
                 desc: desc
             }, { withCredentials: true })
                 .then(res => {
-                    if (res.data.status === 200) {
+                    if (res.data.status >= 400) {
+                        handleAlert('error', 'Proses Gagal!', res.data.message)
+                    } else {
                         handleAlert('success', 'Proses Berhasil!', res.data.message)
                         setNamePlace("")
                         setImage("")
                         setLongtitude("")
                         setLatitude("")
                         setDesc("")
-                    } else {
-                        handleAlert('error', 'Proses Gagal!', res.data.message)
                     }
 
                     setIsLoading(false)
                 })
                 .catch(err => {
                     handleAlert('error', 'Proses Gagal!', 'Server gagal memproses!')
+                    console.log(err.message)
                     setIsLoading(false)
                 })
         }
@@ -69,30 +72,42 @@ const TouristAttractionsControllers = () => {
             })
             .catch(err => {
                 handleAlert('error', 'Proses Gagal!', 'Server gagal memproses!')
+                console.log(err.message)
             })
     }
 
     const TAUpdate = async (e) => {
         e.preventDefault()
 
-        await axios.put('/api/tourist-attractions/update', {
-            taid: taid,
-            nameplace: nameplace,
-            image: image,
-            desc: desc,
-            longtitude: longtitude,
-            latitude: latitude
-        })
-            .then(res => {
-                if (res.data.status === 400 || res.data.status === 500) {
-                    handleAlert('error', 'Proses Gagal!', res.data.message)
-                } else {
-                    handleAlert('success', 'Proses Gagal!', res.data.message)
-                }
+        setIsLoading(true)
+        if (nameplace === "" || image === "" || longtitude === "" || latitude === "" || desc === "") {
+            handleAlert('error', 'Proses Gagal!', 'Masih ada form yang kosong, silahkan periksa kembali!')
+            setIsLoading(false)
+        } else {
+            await axios.put('/api/tourist-attractions/update', {
+                taid: taid,
+                nameplace: nameplace,
+                image: image,
+                desc: desc,
+                longtitude: longtitude,
+                latitude: latitude
             })
-            .catch(err => {
-                handleAlert('error', 'Proses Gagal!', 'Server gagal memproses!')
-            })
+                .then(res => {
+                    if (res.data.status >= 400) {
+                        handleAlert('error', 'Proses Gagal!', res.data.message)
+                    } else {
+                        handleAlert('success', 'Proses Berhasil!', res.data.message)
+                        router.push('/dashboard/tourist-attractions')
+                    }
+
+                    setIsLoading(false)
+                })
+                .catch(err => {
+                    handleAlert('error', 'Proses Gagal!', 'Server gagal memproses!')
+                    console.log(err.message)
+                    setIsLoading(false)
+                })
+        }
     }
 
     // Get All Tourist Attractions
@@ -100,9 +115,11 @@ const TouristAttractionsControllers = () => {
         await axios.post('/api/tourist-attractions/get-all')
             .then(res => {
                 setData(res.data.data)
+                console.log(res)
             })
             .catch(err => {
                 handleAlert('error', 'Proses Gagal!', 'Server gagal memproses!')
+                console.log(err.message)
             })
     }
 
@@ -117,6 +134,7 @@ const TouristAttractionsControllers = () => {
             })
             .catch(err => {
                 handleAlert('error', 'Proses Gagal!', 'Server gagal memproses!')
+                console.log(err.message)
                 setIsLoading(false)
             })
     }

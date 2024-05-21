@@ -14,7 +14,6 @@ model Users {
   password           String
   role               String               @default("USER")
   TouristAttractions TouristAttractions[]
-  Culture            Cultures[]
   Blog               Blogs[]
 
   @@map("users")
@@ -28,10 +27,11 @@ model TouristAttractions {
   description String
   longtitude  Float      @default(0.00)
   latitude    Float      @default(0.00)
+  Cultures    Cultures[]
   Comment     Comments[]
 
   // Ketika user di hapus maka data tourist_attractions yang userid nya sama maka akan terhapus
-  user Users @relation(fields: [userid], references: [id], onDelete: Cascade)
+  users Users @relation(fields: [userid], references: [id], onDelete: Cascade)
 
   @@map("touristattractions")
 }
@@ -39,23 +39,22 @@ model TouristAttractions {
 model Cultures {
   id         Int    @id @default(autoincrement())
   taid       String
-  userid     String
   name_image String
   image      String
 
   // Ketika user di hapus maka data culture yang userid nya sama maka akan terhapus
-  user Users @relation(fields: [userid], references: [id], onDelete: Cascade)
+  TouristAttraction TouristAttractions @relation(fields: [taid], references: [taid], onDelete: Cascade)
 
   @@map("cultures")
 }
 
 model Comments {
-  id          Int    @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   taid        String
-  userid      String
   name        String
   contact     String
   description String
+  time        DateTime @default(now())
 
   TouristAttraction TouristAttractions @relation(fields: [taid], references: [taid], onDelete: Cascade)
 
@@ -70,7 +69,7 @@ model Blogs {
   description String
 
   // Ketika user di hapus maka data culture yang userid nya sama maka akan terhapus
-  user Users @relation(fields: [userid], references: [id], onDelete: Cascade)
+  users Users @relation(fields: [userid], references: [id], onDelete: Cascade)
 
   @@map("blogs")
 }

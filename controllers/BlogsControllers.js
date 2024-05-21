@@ -2,11 +2,13 @@ import axios from "axios";
 import { useSession } from "next-auth/react";
 import Script from "@/assets/script";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const BlogsControllers = () => {
     const { data: session } = useSession()
     const { handleAlert } = Script()
     const [isLoading, setIsLoading] = useState(false)
+    const router = useRouter()
 
     const [blogData, setBlogData] = useState([])
     const [blogid, setBlogId] = useState("")
@@ -103,6 +105,7 @@ const BlogsControllers = () => {
                         handleAlert('error', 'Proses Gagal!', res.data.message)
                     } else {
                         handleAlert('success', 'Proses Berhasil!', res.data.message)
+                        router.push('/dashboard/blog')
                     }
 
                     setIsLoading(false)
