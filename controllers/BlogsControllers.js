@@ -16,7 +16,7 @@ const BlogsControllers = () => {
 
     // Get All
     const getAllBlog = async () => {
-        await axios.get('/api/blogs/get-all')
+        await axios.post('/api/blogs/get-all')
             .then(res => {
                 setBlogData(res.data.data)
             })
