@@ -8,11 +8,13 @@ import TouristAttractionsControllers from '@/controllers/TouristAttractionsContr
 import { useSession } from 'next-auth/react';
 import AuthControllers from '@/controllers/AuthControllers';
 import BlogsControllers from '@/controllers/BlogsControllers';
+import CommentsControllers from '@/controllers/CommentsControllers';
 
 export default function HomeComponent() {
     const { data: session } = useSession()
     const { blogData, getAllBlog } = BlogsControllers()
     const { userData, USRGetAll } = AuthControllers()
+    const { commentData, getAllComment } = CommentsControllers()
     const {
         data,
         TAGetAll
@@ -49,6 +51,7 @@ export default function HomeComponent() {
 
         USRGetAll()
         getAllBlog()
+        getAllComment()
     }, [])
 
     return (
@@ -59,7 +62,7 @@ export default function HomeComponent() {
                         <div className="bg-hero"></div>
                         <div className="container row-column gap-3 card-statistic-wrapper">
                             <CardStatistic statisticName="Tempat Wisata" solidIcon="fa-mountain-sun" data={data.length} dataFooter={"Jumlah lokasi tempat wisata yang anda unggah"} />
-                            <CardStatistic statisticName="Komentar" solidIcon="fa-comments" data={userData.length} dataFooter={"Jumlah komentar di beberapa tempat"} />
+                            <CardStatistic statisticName="Komentar" solidIcon="fa-comments" data={commentData.length} dataFooter={"Jumlah komentar di beberapa tempat"} />
                             <CardStatistic statisticName="Blog" solidIcon="fa-blog" data={blogData.length} dataFooter={"Blog yang anda unggah"} />
                             <CardStatistic statisticName="Pengguna" solidIcon="fa-users" data={userData.length} dataFooter={"Pengguna yang terdaftar"} />
                         </div>
