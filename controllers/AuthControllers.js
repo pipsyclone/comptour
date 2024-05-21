@@ -16,7 +16,7 @@ const AuthControllers = () => {
     const [role, setRole] = useState("")
 
     const USRGetAll = async () => {
-        await axios.get('/api/users/get-all')
+        await axios.post('/api/users/get-all')
             .then(res => {
                 setUserData(res.data.data)
             })

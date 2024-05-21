@@ -1,14 +1,14 @@
 import prisma from "@/libs/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET(request) {
+export async function POST(request) {
     try {
-        const query = request.nextUrl.searchParams.get('query')
+        const body = await request.json()
         const result = await prisma.TouristAttractions.findMany({
             where: {
                 OR: [
-                    { name_place: { contains: query, mode: 'insensitive' } },
-                    { description: { contains: query, mode: 'insensitive' } }
+                    { name_place: { contains: body.query, mode: 'insensitive' } },
+                    { description: { contains: body.query, mode: 'insensitive' } }
                 ]
             }
         })

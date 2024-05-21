@@ -1,15 +1,15 @@
 import prisma from "@/libs/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET(request) {
+export async function POST(request) {
     try {
-        const query = request.nextUrl.searchParams.get('query')
+        const body = await request.json()
 
         const result = await prisma.blogs.findMany({
             where: {
                 OR: [
-                    { title: { contains: query, mode: 'insensitive' } },
-                    { description: { contains: query, mode: 'insensitive' } },
+                    { title: { contains: body.query, mode: 'insensitive' } },
+                    { description: { contains: body.query, mode: 'insensitive' } },
                 ]
             }
         })

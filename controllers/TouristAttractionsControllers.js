@@ -56,7 +56,9 @@ const TouristAttractionsControllers = () => {
 
     // Update Tourist Attractions
     const TAUpdateGetById = async (taid) => {
-        await axios.get('/api/tourist-attractions/get-by-id?taid=' + taid)
+        await axios.post('/api/tourist-attractions/get-by-id', {
+            taid: taid
+        })
             .then(res => {
                 setTaid(res.data.data.taid)
                 setNamePlace(res.data.data.name_place)
@@ -95,7 +97,7 @@ const TouristAttractionsControllers = () => {
 
     // Get All Tourist Attractions
     const TAGetAll = async () => {
-        await axios.get('/api/tourist-attractions/get-all')
+        await axios.post('/api/tourist-attractions/get-all')
             .then(res => {
                 setData(res.data.data)
             })
