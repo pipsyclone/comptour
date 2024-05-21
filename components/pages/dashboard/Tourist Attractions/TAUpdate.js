@@ -7,7 +7,7 @@ export default function TAUpdateComponent() {
     const params = useParams()
     const {
         isLoading,
-        taid, setTaid, nameplace, setNamePlace, image, setImage, longtitude, setLongtitude, latitude, setLatitude, desc, setDesc,
+        taid, nameplace, setNamePlace, image, setImage, longtitude, setLongtitude, latitude, setLatitude, desc, setDesc,
         TAUpdateGetById, TAUpdate
 
     } = TouristAttractionsControllers()
@@ -27,7 +27,7 @@ export default function TAUpdateComponent() {
             </div>
             <div className="card">
                 <form onSubmit={TAUpdate} className="row-column gap-3">
-                    <input type="text" name="taid" value={taid} onChange={(e) => setTaid(e.target.value)} readOnly hidden />
+                    <input type="text" name="taid" value={taid} readOnly hidden />
                     <div className="row-column">
                         <label>Nama Tempat Wisata : </label>
                         <input type="text" name="nameplace" className="form-ctrl" value={nameplace} onChange={(e) => setNamePlace(e.target.value)} />

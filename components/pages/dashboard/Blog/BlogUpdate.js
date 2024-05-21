@@ -7,7 +7,7 @@ export default function BlogUpdateComponent() {
     const params = useParams()
     const {
         isLoading,
-        blogid, setBlogId, image, setImage, title, setTitle, desc, setDesc,
+        blogid, image, setImage, title, setTitle, desc, setDesc,
         getBlogById,
         updateBlog,
     } = BlogsControllers()

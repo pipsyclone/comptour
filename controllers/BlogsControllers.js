@@ -28,7 +28,9 @@ const BlogsControllers = () => {
 
     // Get By Id
     const getBlogById = async (blogid) => {
-        await axios.get('/api/blogs/get-by-id?blogid=' + blogid)
+        await axios.post('/api/blogs/get-by-id', {
+            blogid: blogid
+        })
             .then(res => {
                 const data = res.data.data
                 setBlogId(data.blogid)
