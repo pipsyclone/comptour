@@ -83,7 +83,7 @@ export default function HomeComponent() {
                             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
                             {
                                 data.map((data, key) => {
-                                    if (session.user.userid === data.userid) {
+                                    if (session?.user?.userid === data.userid) {
                                         return (
                                             <Marker position={[data?.longtitude, data?.latitude]} icon={wisataMarker} key={key}>
                                                 <Popup>
