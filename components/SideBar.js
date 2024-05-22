@@ -15,7 +15,7 @@ const Sidebar = (props) => {
 
             <aside className={props.sidebarShow ? 'sidebar-desktop' : 'sidebar-responsive'}>
                 {/* <h3 className="nav-title">CompTour</h3> */}
-                <Image src={Logo} className='nav-title' width={150} height={0} />
+                <Image src={Logo} className='nav-title' alt="Logo Comptour" width={150} height={0} />
                 <ul className="nav-list">
                     <li className="nav-item">
                         <a href="/" className="nav-link">

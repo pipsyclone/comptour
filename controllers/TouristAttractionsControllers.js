@@ -115,7 +115,6 @@ const TouristAttractionsControllers = () => {
         await axios.post('/api/tourist-attractions/get-all')
             .then(res => {
                 setData(res.data.data)
-                console.log(res)
             })
             .catch(err => {
                 handleAlert('error', 'Proses Gagal!', 'Server gagal memproses!')

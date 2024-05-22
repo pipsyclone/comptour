@@ -1,9 +1,17 @@
 'use client'
 
-import { useState } from "react";
-import { signOut } from "next-auth/react";
+import { useEffect, useState } from "react";
+import { signOut, useSession } from "next-auth/react";
+import UsersControllers from "@/controllers/UsersControllers";
 
 export default function SettingsComponent() {
+    const {
+        isLoading,
+        name, setName, email, setEmail, password, setPassword, confirmPassword, setConfirmPassword,
+        updateUser,
+        updatePasswords
+    } = UsersControllers()
+
     const [menu, setMenu] = useState('profile')
     return (
         <>
@@ -20,55 +28,56 @@ export default function SettingsComponent() {
                 </div>
                 {
                     menu === 'security' ?
-                        SecurityCard()
+                        <div className="card flex-grow-3 align-md-self-start">
+                            <h2>Security</h2>
+                            <br />
+                            <hr />
+                            <br />
+                            <form onSubmit={updatePasswords} className="row-column gap">
+                                <div className="row gap-2">
+                                    <input type="password" className="form-ctrl flex-grow" placeholder="Kata Sandi Baru" value={password} onChange={(e) => setPassword(e.target.value)} />
+                                    <input type="password" className="form-ctrl flex-grow" placeholder="Konfirmasi Kata Sandi" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                                </div>
+                                <div className="align-self-end">
+                                    <button type="submit" className={isLoading ? "btn btn-success disabled" : "btn btn-success"}>
+                                        {isLoading ? <div className="loader"></div> : 'Simpan Perubahan'}
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
                         :
                         menu === 'account' ?
-                            AccountCard()
+                            <div className="card row-column flex-grow-3 align-md-self-start gap-2">
+                                <h2>Account</h2>
+                                <hr />
+                                <div>
+                                    <button type="button" onClick={() => signOut()} className="btn btn-danger">Logout</button>
+                                </div>
+                            </div>
                             :
-                            ProfileCard()
+                            <div className="card flex-grow-3 align-md-self-start">
+                                <h2>Profile</h2>
+                                <br />
+                                <hr />
+                                <br />
+                                <form onSubmit={updateUser} className="row-column gap">
+                                    <div className="row-column gap">
+                                        <label>Nama Lengkap : </label>
+                                        <input type="text" className="form-ctrl" placeholder="Jhon Doe" value={name} onChange={(e) => setName(e.target.value)} />
+                                    </div>
+                                    <div className="row-column gap">
+                                        <label>Email : </label>
+                                        <input type="email" className="form-ctrl" placeholder="example@mail.com" value={email} onChange={(e) => setEmail(e.target.value)} />
+                                    </div>
+                                    <div className="align-self-end">
+                                        <button type="submit" className={isLoading ? "btn btn-success disabled" : "btn btn-success"}>
+                                            {isLoading ? <div className="loader"></div> : 'Simpan Perubahan'}
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
                 }
             </div>
         </>
-    )
-}
-
-const ProfileCard = () => {
-    return (
-        <div className="card row-column flex-grow-3 align-md-self-start gap-2">
-            <h2>Profile</h2>
-            <hr />
-            <input type="text" className="form-ctrl" placeholder="Jhon Doe" />
-            <input type="email" className="form-ctrl" placeholder="example@mail.com" />
-            <textarea rows={7} className="form-ctrl" placeholder="Bio"></textarea>
-            <div className="align-self-end">
-                <button type="button" className="btn btn-success">Save Change</button>
-            </div>
-        </div>
-    )
-}
-
-const SecurityCard = () => {
-    return (
-        <div className="card row-column flex-grow-3 align-md-self-start gap-2">
-            <h2>Security</h2>
-            <hr />
-            <input type="text" className="form-ctrl" placeholder="New Password" />
-            <input type="password" className="form-ctrl" placeholder="Confirm Password" />
-            <div className="align-self-end">
-                <button type="button" className="btn btn-success">Save Change</button>
-            </div>
-        </div>
-    )
-}
-
-const AccountCard = () => {
-    return (
-        <div className="card row-column flex-grow-3 align-md-self-start gap-2">
-            <h2>Account</h2>
-            <hr />
-            <div>
-                <button type="button" onClick={() => signOut()} className="btn btn-danger">Logout</button>
-            </div>
-        </div>
     )
 }

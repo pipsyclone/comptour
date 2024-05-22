@@ -1,3 +1,4 @@
+import { signOut } from "next-auth/react";
 import { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 
@@ -15,9 +16,26 @@ const Script = () => {
         })
     }
 
+    // Confirmed Alert
+    const handleConfirmLogoutAlert = (icon, title, text, cancelButton, buttonConfirmText) => {
+        Swal.fire({
+            title: title,
+            text: text,
+            icon: icon,
+            showCancelButton: cancelButton,
+            confirmButtonText: buttonConfirmText
+        })
+            .then((result) => {
+                if (result.isConfirmed) {
+                    signOut()
+                }
+            })
+    }
+
     return {
         showHideSidebar, setShowHideSidebar,
-        handleAlert
+        handleAlert,
+        handleConfirmLogoutAlert
     }
 }
 

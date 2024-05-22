@@ -11,7 +11,6 @@ const CommentsControllers = () => {
         await axios.post('/api/comments/get-all')
             .then(res => {
                 setCommentData(res.data.data)
-                console.log(res.data)
             })
             .catch(err => {
                 handleAlert('error', 'Proses Gagal!', 'Server gagal memproses!')
