@@ -9,10 +9,11 @@ export async function POST() {
             }
         })
 
-        const recommendations = touristattractions.map(attraction => ({
-            name_place: attraction.name_place,
-            description: attraction.description,
-            commentCount: attraction.Comment.length,
+        const recommendations = touristattractions.map(data => ({
+            name_place: data.name_place,
+            image: data.image,
+            description: data.description,
+            commentCount: data.Comment.length,
         }));
 
         // Sort recommendations by the number of comments, descending
