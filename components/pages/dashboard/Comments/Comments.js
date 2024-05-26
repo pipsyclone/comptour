@@ -1,3 +1,4 @@
+'use client'
 import DataTables from "@/components/DataTables";
 import CommentsControllers from "@/controllers/CommentsControllers";
 import { useState, useEffect, useMemo } from "react";

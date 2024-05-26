@@ -1,55 +1,46 @@
 'use client'
-import { useState, useMemo, useEffect } from "react";
-import DataTables from "@/components/DataTables";
-import TouristAttractionsControllers from "@/controllers/TouristAttractionsControllers";
-import { useSession } from "next-auth/react";
+import { useState, useEffect, useMemo } from "react"
+import DataTables from "@/components/DataTables"
+import { useSession } from "next-auth/react"
+import CulturesControllers from "@/controllers/CulturesControllers"
 
-export default function TouristAttractionsComponent() {
+export default function CulturesComponent() {
+
     const { data: session } = useSession()
     const {
         isLoading,
-        data,
-        TAGetAll,
-        TADelete
-    } = TouristAttractionsControllers()
+        culturesData,
+        getAllCultures,
+        deleteCultures
+    } = CulturesControllers()
 
     useEffect(() => {
-        TAGetAll()
+        getAllCultures()
     }, [])
 
     const columns = [
         {
-            name: "ID",
-            selector: row => row.taid,
-            // sortable: true
+            name: 'TAID',
+            selector: row => row.taid
         },
         {
-            name: "Gambar",
+            name: 'Nama Gambar',
+            selector: row => row.name_image
+        },
+        {
+            name: 'Gambar',
             selector: row => row.image
         },
         {
-            name: "Nama Tempat Wisata",
-            selector: row => row.name_place
-        },
-        {
-            name: "Longititude",
-            selector: row => row.longtitude
-        },
-        {
-            name: "Latitude",
-            selector: row => row.latitude
-        },
-        {
-            name: "Aksi",
+            name: 'Aksi',
             selector: row => (
                 <div className="row gap">
-                    <button type="button" className="btn btn-sm btn-primary" onClick={() => window.location.href = '/dashboard/tourist-attractions/update/' + row.taid}>Edit</button>
-                    <button type="button" className={isLoading ? "btn btn-sm btn-danger disabled" : "btn btn-sm btn-danger"} onClick={() => TADelete(row.taid)}>
-                        {isLoading ? <div className="loader"></div> : 'Hapus'}
+                    <a href={"/dashboard/tourist-attractions/cultures/update/" + row.id} className="btn btn-sm btn-primary">Edit</a>
+                    <button type="button" className={isLoading && row.id ? "btn btn-sm btn-danger disabled" : "btn btn-sm btn-danger"} onClick={() => deleteCultures(row.id)}>
+                        {isLoading ? <div className="loader"></div> : 'Delete'}
                     </button>
                 </div>
-            ),
-            style: { padding: '5px' }
+            )
         }
     ]
 
@@ -62,9 +53,9 @@ export default function TouristAttractionsComponent() {
 
     const [filterText, setFilterText] = useState('');
     const [resetPaginationToggle, setResetPaginationToggle] = useState(false);
-    const filteredData = data.filter(
+    const filteredData = culturesData.filter(
         item =>
-            item.name_place && item.name_place.toLowerCase().includes(filterText.toLowerCase())
+            item.name_image && item.name_image.toLowerCase().includes(filterText.toLowerCase())
     )
 
     const subHeaderComponentMemo = useMemo(() => {
@@ -91,13 +82,15 @@ export default function TouristAttractionsComponent() {
                 <span>Dashboard</span>
                 /
                 <span>Tempat Wisata</span>
+                /
+                <span>Gambar Budaya</span>
             </div>
 
             <div className="container">
                 <div className="card">
-                    <div className="row space-between mb-3">
-                        <a href="/dashboard/tourist-attractions/cultures" className="btn btn-primary">Gambar Budaya</a>
-                        <a href="/dashboard/tourist-attractions/store" className="btn btn-primary">Tambah Tempat Wisata</a>
+                    <div className="row gap space-between mb-3">
+                        <a href="/dashboard/tourist-attractions" className="btn btn-primary">Tempat Wisata</a>
+                        <a href="/dashboard/tourist-attractions/cultures/store" className="btn btn-primary">Tambah Gambar Budaya</a>
                     </div>
                     <hr />
                     {
