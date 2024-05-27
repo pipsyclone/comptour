@@ -10,6 +10,7 @@ export async function POST() {
         })
 
         const recommendations = touristattractions.map(data => ({
+            taid: data.taid,
             name_place: data.name_place,
             image: data.image,
             description: data.description,
