@@ -19,7 +19,7 @@ export async function POST(request) {
           taid: 'TA' + randomstring.generate({ length: 13, charset: 'numeric' }),
           userid: userid,
           name_place: nameplace,
-          image: image,
+          image: 'https://drive.google.com/uc?export=view&id=' + image,
           description: desc,
           longtitude: longtitude,
           latitude: latitude

@@ -3,6 +3,7 @@ import { useState, useMemo, useEffect } from "react";
 import DataTables from "@/components/DataTables";
 import TouristAttractionsControllers from "@/controllers/TouristAttractionsControllers";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 export default function TouristAttractionsComponent() {
     const { data: session } = useSession()
@@ -25,7 +26,9 @@ export default function TouristAttractionsComponent() {
         },
         {
             name: "Gambar",
-            selector: row => row.image
+            selector: row => (
+                <Image src={row.image} alt={row.name_place} width={200} height={100} />
+            )
         },
         {
             name: "Nama Tempat Wisata",

@@ -36,7 +36,6 @@ const BlogsControllers = () => {
             .then(res => {
                 const data = res.data.data
                 setBlogId(data.blogid)
-                setImage(data.image)
                 setTitle(data.title)
                 setDesc(data.description)
                 console.log(data)
@@ -89,7 +88,7 @@ const BlogsControllers = () => {
         e.preventDefault()
 
         setIsLoading(true)
-        if (image === "" || title === "" || desc === "") {
+        if (title === "" || desc === "") {
             handleAlert('error', 'Proses Gagal!', 'Masih ada form yang kosong, silahkan periksa kembali!')
 
             setIsLoading(false)

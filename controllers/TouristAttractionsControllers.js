@@ -65,7 +65,6 @@ const TouristAttractionsControllers = () => {
             .then(res => {
                 setTaid(res.data.data.taid)
                 setNamePlace(res.data.data.name_place)
-                setImage(res.data.data.image)
                 setDesc(res.data.data.description)
                 setLongtitude(res.data.data.longtitude)
                 setLatitude(res.data.data.latitude)
@@ -80,7 +79,7 @@ const TouristAttractionsControllers = () => {
         e.preventDefault()
 
         setIsLoading(true)
-        if (nameplace === "" || image === "" || longtitude === "" || latitude === "" || desc === "") {
+        if (nameplace === "" || longtitude === "" || latitude === "" || desc === "") {
             handleAlert('error', 'Proses Gagal!', 'Masih ada form yang kosong, silahkan periksa kembali!')
             setIsLoading(false)
         } else {
@@ -89,8 +88,8 @@ const TouristAttractionsControllers = () => {
                 nameplace: nameplace,
                 image: image,
                 desc: desc,
-                longtitude: longtitude,
-                latitude: latitude
+                longtitude: parseFloat(longtitude),
+                latitude: parseFloat(latitude)
             })
                 .then(res => {
                     if (res.data.status >= 400) {

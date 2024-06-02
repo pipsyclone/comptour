@@ -3,6 +3,7 @@ import { useState, useMemo } from "react";
 import DataTables from "@/components/DataTables";
 import BlogsControllers from "@/controllers/BlogsControllers";
 import { useSession } from "next-auth/react";
+import Image from "next/image";
 
 export default function BlogComponent() {
     const { data: session } = useSession()
@@ -25,7 +26,9 @@ export default function BlogComponent() {
         },
         {
             name: 'Gambar',
-            selector: row => row.image
+            selector: row => (
+                <Image src={row.image} alt={row.title} width={200} height={100} />
+            )
         },
         {
             name: 'Judul',

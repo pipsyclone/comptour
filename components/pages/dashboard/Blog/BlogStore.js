@@ -23,8 +23,8 @@ export default function BlogStoreComponent() {
                 <div className="card">
                     <form onSubmit={storeBlog} className="row-column gap-3">
                         <div className="row-column gap">
-                            <label>Masukkan URL Gambar : </label>
-                            <input type="url" name="image" className="form-ctrl" pattern="https?://.*" value={image} onChange={(e) => setImage(e.target.value)} />
+                            <label>Masukkan ID Gambar : </label>
+                            <input type="text" name="image" className="form-ctrl" value={image} onChange={(e) => setImage(e.target.value)} placeholder="example : 1xpdoNh_O0C-rkjUcUFZAVSQTaGK1eV5u" />
                         </div>
                         <div className="row-column gap">
                             <label>Masukkan Judul Blog : </label>

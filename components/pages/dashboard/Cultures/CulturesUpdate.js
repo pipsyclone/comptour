@@ -57,7 +57,7 @@ export default function CulturesUpdateComponent() {
                             </div>
                             <div className="row-column gap flex-grow">
                                 <label>Masukkan URL Gambar :</label>
-                                <input type="url" name="image_culture" className="form-ctrl" value={imageCulture} onChange={(e) => setImageCulture(e.target.value)} pattern="https?://.*" />
+                                <input type="text" name="image_culture" className="form-ctrl" value={imageCulture} onChange={(e) => setImageCulture(e.target.value)} placeholder="example : 1xpdoNh_O0C-rkjUcUFZAVSQTaGK1eV5u" />
                             </div>
                         </div>
 

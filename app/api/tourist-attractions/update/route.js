@@ -6,16 +6,28 @@ export async function PUT(request) {
         const body = await request.json()
         const { taid, nameplace, image, desc, longtitude, latitude } = body
 
-        await prisma.TouristAttractions.update({
-            where: { taid: taid },
-            data: {
-                name_place: nameplace,
-                image: image,
-                description: desc,
-                longtitude: longtitude,
-                latitude: latitude
-            }
-        })
+        if (image === "") {
+            await prisma.TouristAttractions.update({
+                where: { taid: taid },
+                data: {
+                    name_place: nameplace,
+                    description: desc,
+                    longtitude: longtitude,
+                    latitude: latitude
+                }
+            })
+        } else {
+            await prisma.TouristAttractions.update({
+                where: { taid: taid },
+                data: {
+                    name_place: nameplace,
+                    image: 'https://drive.google.com/uc?export=view&id=' + image,
+                    description: desc,
+                    longtitude: longtitude,
+                    latitude: latitude
+                }
+            })
+        }
 
         return NextResponse.json({ status: 200, message: 'Berhasil memperbarui data!' })
     } catch (err) {

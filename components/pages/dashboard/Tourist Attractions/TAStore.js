@@ -25,8 +25,8 @@ export default function TAStoreComponent() {
                         <input type="text" name="nameplace" className="form-ctrl" value={nameplace} onChange={(e) => setNamePlace(e.target.value)} />
                     </div>
                     <div className="row-column">
-                        <label>Tautan Gambar Tempat Wisata : </label>
-                        <input type="url" name="image" className="form-ctrl" value={image} onChange={(e) => setImage(e.target.value)} pattern="https?://.*" />
+                        <label>Gambar ID Tempat Wisata : </label>
+                        <input type="text" name="image" className="form-ctrl" value={image} onChange={(e) => setImage(e.target.value)} placeholder="example : 1xpdoNh_O0C-rkjUcUFZAVSQTaGK1eV5u" />
                     </div>
                     <div className="row row-md gap-2">
                         <div className="row-column flex-grow">

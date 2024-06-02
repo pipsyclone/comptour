@@ -13,14 +13,24 @@ export async function PUT(request) {
         if (checkId.length < 1) {
             return NextResponse.json({ status: 404, message: 'Blog tidak ditemukan!' })
         } else {
-            await prisma.blogs.update({
-                where: { blogid: parseInt(blogid) },
-                data: {
-                    image: image,
-                    title: title,
-                    description: desc
-                }
-            })
+            if (image === "") {
+                await prisma.blogs.update({
+                    where: { blogid: parseInt(blogid) },
+                    data: {
+                        title: title,
+                        description: desc
+                    }
+                })
+            } else {
+                await prisma.blogs.update({
+                    where: { blogid: parseInt(blogid) },
+                    data: {
+                        image: 'https://drive.google.com/uc?export=view&id=' + image,
+                        title: title,
+                        description: desc
+                    }
+                })
+            }
 
             return NextResponse.json({ status: 200, message: 'Berhasil memperbarui data!' })
         }
