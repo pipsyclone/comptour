@@ -16,7 +16,7 @@ export async function POST(request) {
             await prisma.blogs.create({
                 data: {
                     userid: userid,
-                    image: 'https://drive.google.com/uc?export=view&id=' + image,
+                    image: 'https://drive.google.com/thumbnail?sz=w1000&id=' + image,
                     title: title,
                     description: desc
                 }

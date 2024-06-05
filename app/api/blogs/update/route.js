@@ -25,7 +25,7 @@ export async function PUT(request) {
                 await prisma.blogs.update({
                     where: { blogid: parseInt(blogid) },
                     data: {
-                        image: 'https://drive.google.com/uc?export=view&id=' + image,
+                        image: 'https://drive.google.com/thumbnail?sz=w1000&id=' + image,
                         title: title,
                         description: desc
                     }

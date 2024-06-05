@@ -21,7 +21,7 @@ export async function PUT(request) {
                 where: { taid: taid },
                 data: {
                     name_place: nameplace,
-                    image: 'https://drive.google.com/uc?export=view&id=' + image,
+                    image: 'https://drive.google.com/thumbnail?sz=w1000&id=' + image,
                     description: desc,
                     longtitude: longtitude,
                     latitude: latitude

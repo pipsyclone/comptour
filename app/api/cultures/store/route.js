@@ -18,7 +18,7 @@ export async function POST(request) {
             data: {
                 taid: taid,
                 name_image: name_image,
-                image: image_culture
+                image: 'https://drive.google.com/thumbnail?sz=w1000&id=' + image_culture
             }
         })
         return NextResponse.json({ status: 200, message: 'Berhasil menambahkan gambar budaya!' })
