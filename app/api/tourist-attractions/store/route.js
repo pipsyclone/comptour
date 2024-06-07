@@ -5,7 +5,7 @@ import { NextResponse } from "next/server"
 export async function POST(request) {
   try {
     const body = await request.json()
-    const { userid, nameplace, image, longtitude, latitude, desc } = body
+    const { userid, nameplace, image, province, regency, district, longtitude, latitude, desc } = body
 
     const checkNamePlace = await prisma.TouristAttractions.findMany({
       where: { name_place: nameplace }
@@ -20,9 +20,12 @@ export async function POST(request) {
           userid: userid,
           name_place: nameplace,
           image: 'https://drive.google.com/thumbnail?sz=w1000&id=' + image,
-          description: desc,
+          province: province,
+          regency: regency,
+          district: district,
           longtitude: longtitude,
-          latitude: latitude
+          latitude: latitude,
+          description: desc
         }
       })
 

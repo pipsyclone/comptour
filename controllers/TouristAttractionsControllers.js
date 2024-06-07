@@ -10,20 +10,84 @@ const TouristAttractionsControllers = () => {
     const { data: session } = useSession()
     const { handleAlert } = Script()
     const router = useRouter()
+    const baseURL = 'https://www.emsifa.com/api-wilayah-indonesia'
 
     const [data, setData] = useState([])
+    const [dataProvinsi, setDataProvinsi] = useState([])
+    const [dataKabupaten, setDataKabupaten] = useState([])
+    const [dataKecamatan, setDataKecamatan] = useState([])
     const [taid, setTaid] = useState("")
     const [nameplace, setNamePlace] = useState("")
     const [image, setImage] = useState("")
+    const [provinsi, setProvinsi] = useState({ id: '', name: '' })
+    const [kabupaten, setKabupaten] = useState({ id: '', name: '' })
+    const [kecamatan, setKecamatan] = useState({ id: '', name: '' })
     const [longtitude, setLongtitude] = useState("")
     const [latitude, setLatitude] = useState("")
     const [desc, setDesc] = useState("")
 
+    const getProvinsi = async () => {
+        await axios.get(baseURL + '/api/provinces.json')
+            .then(res => {
+                setDataProvinsi(res.data)
+            })
+            .catch(err => {
+                console.log(err.message)
+            })
+    }
+
+    const getKabupaten = async (provinceid) => {
+        await axios.get(baseURL + '/api/regencies/' + provinceid + '.json')
+            .then(res => {
+                setDataKabupaten(res.data)
+            })
+            .catch(err => {
+                console.log(err.message)
+            })
+    }
+
+    const getKecamatan = async (regencyid) => {
+        await axios.get(baseURL + '/api/districts/' + regencyid + '.json')
+            .then(res => {
+                setDataKecamatan(res.data)
+            })
+            .catch(err => {
+                console.log(err.message)
+            })
+    }
+
+    const handleChangeProvince = async (e) => {
+        const selectedId = e.target.value;
+        await axios.get(baseURL + '/api/provinces.json')
+            .then(res => {
+                const selectedProvince = res.data.find(data => data.id === selectedId)
+                setProvinsi({ id: selectedProvince.id, name: selectedProvince.name })
+            })
+    }
+
+    const handleChangeRegency = async (e) => {
+        const selectedId = e.target.value;
+        await axios.get(baseURL + '/api/regencies/' + provinsi.id + '.json')
+            .then(res => {
+                const selectedRegency = res.data.find(data => data.id === selectedId)
+                setKabupaten({ id: selectedRegency.id, name: selectedRegency.name })
+            })
+    }
+
+    const handleChangeDistrict = async (e) => {
+        const selectedId = e.target.value;
+        await axios.get(baseURL + '/api/districts/' + kabupaten.id + '.json')
+            .then(res => {
+                const selectedDistrict = res.data.find(data => data.id === selectedId)
+                setKecamatan({ id: selectedDistrict.id, name: selectedDistrict.name })
+            })
+    }
+
     const TAonSubmit = async (e) => {
-        e.preventDefault();
+        e.preventDefault()
 
         setIsLoading(true)
-        if (nameplace === "" || image === "" || longtitude === "" || latitude === "" || desc === "") {
+        if (nameplace === "" || image === "" || provinsi === "" || kabupaten === "" || kecamatan === "" || longtitude === "" || latitude === "" || desc === "") {
             handleAlert('error', 'Proses Gagal!', 'Masih ada form yang kosong, silahkan periksa kembali!')
             setIsLoading(false)
         } else {
@@ -31,10 +95,13 @@ const TouristAttractionsControllers = () => {
                 userid: session.user.userid,
                 nameplace: nameplace,
                 image: image,
+                province: provinsi.name,
+                regency: kabupaten.name,
+                district: kecamatan.name,
                 longtitude: parseFloat(longtitude),
                 latitude: parseFloat(latitude),
                 desc: desc
-            }, { withCredentials: true })
+            })
                 .then(res => {
                     if (res.data.status >= 400) {
                         handleAlert('error', 'Proses Gagal!', res.data.message)
@@ -43,6 +110,9 @@ const TouristAttractionsControllers = () => {
                         setNamePlace("")
                         setImage("")
                         setLongtitude("")
+                        setProvinsi("")
+                        setKabupaten("")
+                        setKecamatan("")
                         setLatitude("")
                         setDesc("")
                     }
@@ -65,9 +135,9 @@ const TouristAttractionsControllers = () => {
             .then(res => {
                 setTaid(res.data.data.taid)
                 setNamePlace(res.data.data.name_place)
-                setDesc(res.data.data.description)
                 setLongtitude(res.data.data.longtitude)
                 setLatitude(res.data.data.latitude)
+                setDesc(res.data.data.description)
             })
             .catch(err => {
                 handleAlert('error', 'Proses Gagal!', 'Server gagal memproses!')
@@ -87,9 +157,12 @@ const TouristAttractionsControllers = () => {
                 taid: taid,
                 nameplace: nameplace,
                 image: image,
-                desc: desc,
+                province: provinsi.name,
+                regency: kabupaten.name,
+                district: kecamatan.name,
                 longtitude: parseFloat(longtitude),
-                latitude: parseFloat(latitude)
+                latitude: parseFloat(latitude),
+                desc: desc
             })
                 .then(res => {
                     if (res.data.status >= 400) {
@@ -139,7 +212,10 @@ const TouristAttractionsControllers = () => {
 
     return {
         isLoading,
-        data, setData, taid, setTaid, nameplace, setNamePlace, image, setImage, longtitude, setLongtitude, latitude, setLatitude, desc, setDesc,
+        dataProvinsi, dataKabupaten, dataKecamatan,
+        data, setData, taid, setTaid, nameplace, setNamePlace, image, setImage, provinsi, setProvinsi, kabupaten, setKabupaten, kecamatan, setKecamatan, longtitude, setLongtitude, latitude, setLatitude, desc, setDesc,
+        handleChangeProvince, handleChangeRegency, handleChangeDistrict,
+        getProvinsi, getKabupaten, getKecamatan,
         TAonSubmit,
         TAGetAll,
         TAUpdateGetById, TAUpdate,

@@ -15,9 +15,12 @@ CREATE TABLE "touristattractions" (
     "userid" TEXT NOT NULL,
     "name_place" TEXT NOT NULL,
     "image" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
+    "province" TEXT,
+    "regency" TEXT,
+    "district" TEXT,
     "longtitude" DOUBLE PRECISION NOT NULL DEFAULT 0.00,
     "latitude" DOUBLE PRECISION NOT NULL DEFAULT 0.00,
+    "description" TEXT NOT NULL,
 
     CONSTRAINT "touristattractions_pkey" PRIMARY KEY ("taid")
 );

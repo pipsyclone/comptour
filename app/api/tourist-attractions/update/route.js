@@ -4,9 +4,9 @@ import { NextResponse } from "next/server";
 export async function PUT(request) {
     try {
         const body = await request.json()
-        const { taid, nameplace, image, desc, longtitude, latitude } = body
+        const { taid, nameplace, image, province, regency, district, longtitude, latitude, desc } = body
 
-        if (image === "") {
+        if (image === "" || province === "") {
             await prisma.TouristAttractions.update({
                 where: { taid: taid },
                 data: {
@@ -22,9 +22,12 @@ export async function PUT(request) {
                 data: {
                     name_place: nameplace,
                     image: 'https://drive.google.com/thumbnail?sz=w1000&id=' + image,
-                    description: desc,
+                    province: province,
+                    regency: regency,
+                    district: district,
                     longtitude: longtitude,
-                    latitude: latitude
+                    latitude: latitude,
+                    description: desc,
                 }
             })
         }

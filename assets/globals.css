@@ -160,6 +160,10 @@ a {
     pointer-events: none;
 }
 
+.text-danger {
+    color: var(--color-seventh);
+}
+
 /* Loader  */
 .loader {
     width: 18px;
