@@ -1,4 +1,4 @@
-import UsersComponent from "@/components/pages/dashboard/Users"
+import UsersComponent from "@/components/pages/dashboard/Users/Users"
 
 export const metadata = {
     title: 'Pengolahan Data Pengguna'

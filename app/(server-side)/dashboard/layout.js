@@ -19,6 +19,9 @@ export default function DashboardLayout({ children }) {
   return (
     <AuthProvider>
       <html lang="en">
+        <head>
+          <link rel='icon' type='icon/png' href='./images/favicon.png' />
+        </head>
         <body className={inter.className}>
           <div className="row">
             <Sidebar sidebarShow={showHideSidebar} onClickSidebarShow={() => setShowHideSidebar(!showHideSidebar)} />

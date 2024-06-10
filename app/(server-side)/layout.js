@@ -9,7 +9,7 @@ export default function DashboardLayout({ children }) {
     return (
         <html lang="en">
             <head>
-                <link rel='icon' type='icon/png' href='./../../assets/image/favicon.png' />
+                <link rel='icon' type='icon/png' href='./images/favicon.png' />
             </head>
             <body className={inter.className}>
                 {children}

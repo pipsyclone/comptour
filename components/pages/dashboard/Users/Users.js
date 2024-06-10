@@ -2,8 +2,10 @@
 import AuthControllers from "@/controllers/AuthControllers"
 import DataTables from "@/components/DataTables"
 import { useState, useEffect, useMemo } from "react"
+import { useSession } from "next-auth/react"
 
 export default function UsersComponent() {
+    const { data: session } = useSession()
     const {
         userData,
         USRGetAll
@@ -16,7 +18,7 @@ export default function UsersComponent() {
     // Columns
     const columns = [
         {
-            name: 'userid',
+            name: 'USER ID',
             selector: row => row.id
         },
         {
@@ -30,15 +32,14 @@ export default function UsersComponent() {
         {
             name: 'Role',
             selector: row => row.role
-        },
+        }
+    ]
+
+    const conditionalData = [
         {
-            name: 'userid',
-            selector: row => (
-                <>
-                    <button type="button" className="btn btn-sm btn-primary">Lihat</button>
-                </>
-            )
-        },
+            when: row => row.userid === session?.user?.userid,
+            style: { display: "none" }
+        }
     ]
 
     const [filterText, setFilterText] = useState('');
@@ -81,7 +82,7 @@ export default function UsersComponent() {
                     <DataTables
                         columns={columns}
                         dataArray={filteredData}
-                        conditionalData={false}
+                        conditionalData={conditionalData}
                         subHeaderComponentMemo={subHeaderComponentMemo}
                     />
                 </div>

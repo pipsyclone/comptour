@@ -110,9 +110,9 @@ const TouristAttractionsControllers = () => {
                         setNamePlace("")
                         setImage("")
                         setLongtitude("")
-                        setProvinsi("")
-                        setKabupaten("")
-                        setKecamatan("")
+                        setProvinsi({ id: '', name: '' })
+                        setKabupaten({ id: '', name: '' })
+                        setKecamatan({ id: '', name: '' })
                         setLatitude("")
                         setDesc("")
                     }
