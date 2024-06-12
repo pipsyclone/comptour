@@ -3,6 +3,7 @@ import { useState, useEffect, useMemo } from "react"
 import DataTables from "@/components/DataTables"
 import { useSession } from "next-auth/react"
 import CulturesControllers from "@/controllers/CulturesControllers"
+import Image from "next/image"
 
 export default function CulturesComponent() {
 
@@ -24,12 +25,14 @@ export default function CulturesComponent() {
             selector: row => row.taid
         },
         {
-            name: 'Nama Gambar',
-            selector: row => row.name_image
+            name: 'Gambar',
+            selector: row => (
+                <Image src={row.image} alt={row.name_image} width={200} height={100} />
+            )
         },
         {
-            name: 'Gambar',
-            selector: row => row.image
+            name: 'Nama Gambar',
+            selector: row => row.name_image
         },
         {
             name: 'Aksi',
