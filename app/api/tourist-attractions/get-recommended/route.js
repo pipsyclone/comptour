@@ -13,6 +13,9 @@ export async function POST() {
             taid: data.taid,
             name_place: data.name_place,
             image: data.image,
+            province: data.province,
+            regency: data.regency,
+            district: data.district,
             description: data.description,
             commentCount: data.Comment.length,
         }));
