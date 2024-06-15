@@ -18,10 +18,27 @@ const CommentsControllers = () => {
             })
     }
 
+    const deleteAllComment = async () => {
+        await axios.delete('/api/comments/reset')
+            .then(res => {
+                if (res.data.status === 200) {
+                    handleAlert('success', 'Proses Berhasil!', res.data.message)
+                }
+
+                getAllComment()
+                console.log(res.data.message)
+            })
+            .catch(err => {
+                handleAlert('error', 'Proses Gagal!', 'Server gagal memproses!')
+                console.log(err.message)
+            })
+    }
+
     return {
         isLoading,
         commentData, setCommentData,
-        getAllComment
+        getAllComment,
+        deleteAllComment
     }
 }
 

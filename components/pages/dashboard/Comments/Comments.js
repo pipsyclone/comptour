@@ -6,7 +6,8 @@ import { useState, useEffect, useMemo } from "react";
 export default function CommentsComponent() {
     const {
         commentData,
-        getAllComment
+        getAllComment,
+        deleteAllComment
     } = CommentsControllers()
 
     useEffect(() => {
@@ -71,6 +72,9 @@ export default function CommentsComponent() {
 
             <div className="container">
                 <div className="card">
+                    <div className="mb-3">
+                        <button type="button" className="btn btn-danger" onClick={() => deleteAllComment()}>Reset Data</button>
+                    </div>
                     <DataTables
                         columns={columns}
                         dataArray={filteredData}

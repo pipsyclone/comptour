@@ -20,7 +20,7 @@ export default function DashboardLayout({ children }) {
     <AuthProvider>
       <html lang="en">
         <head>
-          <link rel='icon' type='icon/png' href='./images/favicon.png' />
+          <link rel='icon' type='icon/png' href='./../images/favicon.png' />
         </head>
         <body className={inter.className}>
           <div className="row">

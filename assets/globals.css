@@ -88,6 +88,26 @@ a {
     margin-left: auto;
 }
 
+.m-1 {
+    margin: 10px;
+}
+
+.m-2 {
+    margin: 20px;
+}
+
+.m-3 {
+    margin: 30px;
+}
+
+.m-4 {
+    margin: 40px;
+}
+
+.m-5 {
+    margin: 50px;
+}
+
 .mt-1 {
     margin-top: 10px;
 }
